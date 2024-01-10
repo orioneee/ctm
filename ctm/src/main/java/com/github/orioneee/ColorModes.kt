@@ -1,4 +1,4 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 object ColorModes {
     val Dynamic = ColorMode.Dynamic

@@ -1,10 +1,10 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
-import com.orioneee.ctm.internal.AppThemes
+import com.github.orioneee.internal.AppThemes
 
 sealed class ThemeMode(
     internal val key: String,

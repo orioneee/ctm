@@ -1,4 +1,4 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 import android.app.Activity
 import android.content.Context
@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.MutableLiveData
-import com.orioneee.ctm.internal.SharedPrefernnces
+import com.github.orioneee.internal.SharedPrefernnces
 
 object Ctm {
     val Colors = ColorModes

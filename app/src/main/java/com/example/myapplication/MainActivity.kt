@@ -12,8 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.orioneee.ctm.ColorMode
-import com.orioneee.ctm.Ctm
+import com.github.orioneee.ColorMode
+import com.github.orioneee.Ctm
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

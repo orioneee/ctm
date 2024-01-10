@@ -1,4 +1,4 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 object ThemeModes {
     val System = ThemeMode.System

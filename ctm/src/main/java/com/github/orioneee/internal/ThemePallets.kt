@@ -1,4 +1,4 @@
-package com.orioneee.ctm.internal
+package com.github.orioneee.internal
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

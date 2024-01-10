@@ -1,9 +1,9 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 import android.os.Build
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
-import com.orioneee.ctm.internal.AppThemes
+import com.github.orioneee.internal.AppThemes
 
 sealed class ColorMode(
     internal val key: String,

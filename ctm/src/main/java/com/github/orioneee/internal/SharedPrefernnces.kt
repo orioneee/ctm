@@ -1,8 +1,8 @@
-package com.orioneee.ctm.internal
+package com.github.orioneee.internal
 
 import android.content.SharedPreferences
-import com.orioneee.ctm.ColorMode
-import com.orioneee.ctm.ThemeMode
+import com.github.orioneee.ColorMode
+import com.github.orioneee.ThemeMode
 
 internal object SharedPrefernnces {
     lateinit var prefs: SharedPreferences

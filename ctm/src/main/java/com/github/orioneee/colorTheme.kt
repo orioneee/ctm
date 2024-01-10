@@ -1,4 +1,4 @@
-package com.orioneee.ctm
+package com.github.orioneee
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
