@@ -13,7 +13,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -66,7 +66,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.orioneee"
                 artifactId = "ctm"
-                version = "1.0.3"
+                version = "1.0.4"
                 from(components["release"])
             }
         }

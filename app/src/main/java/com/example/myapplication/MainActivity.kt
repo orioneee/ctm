@@ -44,7 +44,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Ctm.Theme {
-        Ctm.setColorMode(ColorMode.Orange)
+        Ctm.setColorMode(Ctm.Colors.Blue)
         Box(
             modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)
         ){}
