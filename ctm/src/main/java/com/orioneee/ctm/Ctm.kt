@@ -20,17 +20,18 @@ import androidx.lifecycle.MutableLiveData
 import com.orioneee.ctm.internal.SharedPrefernnces
 
 object Ctm {
-
-    val ColorModes = listOf(
-        ColorMode.System,
-        ColorMode.Blue,
-        ColorMode.Green,
-        ColorMode.Indigo,
-        ColorMode.Orange,
-        ColorMode.Breeze,
-        ColorMode.Red
+    val Colors = ColorModes
+    val Themes = ThemeModes
+    val AllColorModes = listOf(
+        Colors.Dynamic,
+        Colors.Blue,
+        Colors.Green,
+        Colors.Indigo,
+        Colors.Orange,
+        Colors.Breeze,
+        Colors.Red
     )
-    val ThemeModes = listOf(
+    val AllThemeModes = listOf(
         ThemeMode.System,
         ThemeMode.Light,
         ThemeMode.Dark
@@ -71,17 +72,17 @@ object Ctm {
     val darkColorScheme: ColorScheme
         @Composable
         get() {
-            return _chousenColorMode.observeAsState(ColorMode.System).value.theme.dark
+            return _chousenColorMode.observeAsState(ColorMode.Dynamic).value.theme.dark
         }
     val lightColorScheme: ColorScheme
         @Composable
         get() {
-            return _chousenColorMode.observeAsState(ColorMode.System).value.theme.light
+            return _chousenColorMode.observeAsState(ColorMode.Dynamic).value.theme.light
         }
     val dynamicColorScheme: ColorScheme
         @Composable
         get() {
-            val chooused = _chousenColorMode.observeAsState(ColorMode.System).value
+            val chooused = _chousenColorMode.observeAsState(ColorMode.Dynamic).value
             return if(isAppDarkTheme) chooused.theme.dark else chooused.theme.light
         }
 
@@ -93,7 +94,7 @@ object Ctm {
                 _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
                 _chousenColorMode.value = SharedPrefernnces.loadColorMode()
         }
-        val colorMode by _chousenColorMode.observeAsState(ColorMode.System)
+        val colorMode by _chousenColorMode.observeAsState(ColorMode.Dynamic)
         val colorScheme: ColorScheme
         val isDark = isAppDarkTheme
         colorScheme = if(isDark)  colorMode.theme.dark else colorMode.theme.light

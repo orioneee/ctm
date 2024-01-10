@@ -33,14 +33,14 @@ internal object SharedPrefernnces {
     fun loadColorMode(): ColorMode {
         val mode = prefs.getString(colorMode, "system")
         val result =  when (mode) {
-            ColorMode.System.key -> ColorMode.System
+            ColorMode.Dynamic.key -> ColorMode.Dynamic
             ColorMode.Blue.key -> ColorMode.Blue
             ColorMode.Green.key -> ColorMode.Green
             ColorMode.Indigo.key -> ColorMode.Indigo
             ColorMode.Orange.key -> ColorMode.Orange
             ColorMode.Breeze.key -> ColorMode.Breeze
             ColorMode.Red.key -> ColorMode.Red
-            else -> ColorMode.System
+            else -> ColorMode.Dynamic
         }
         if(!result.isSupported) return ColorMode.Blue
         return result

@@ -10,8 +10,8 @@ sealed class ColorMode(
     val isSupported: Boolean = true,
     val theme: appTheme
 ) {
-    data object System : ColorMode(
-        key = "system",
+    data object Dynamic : ColorMode(
+        key = "Dynamic",
         isSupported = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S),
         theme = object : appTheme {
             override val light: ColorScheme
@@ -24,7 +24,7 @@ sealed class ColorMode(
     )
 
     data object Blue : ColorMode(
-        key = "blue",
+        key = "Blue",
         theme = object : appTheme {
             override val light: ColorScheme
                 @Composable
@@ -36,7 +36,7 @@ sealed class ColorMode(
     )
 
     data object Green : ColorMode(
-        key = "green",
+        key = "Green",
         theme = object : appTheme {
         override val light: ColorScheme
             @Composable
@@ -49,7 +49,7 @@ sealed class ColorMode(
     )
 
     data object Indigo : ColorMode(
-        key = "indigo",
+        key = "Indigo",
         theme = object : appTheme {
             override val light: ColorScheme
                 @Composable
@@ -60,7 +60,7 @@ sealed class ColorMode(
         }
     )
     data object Orange : ColorMode(
-        key = "orange",
+        key = "Orange",
         theme = object : appTheme {
             override val light: ColorScheme
                 @Composable
@@ -72,7 +72,7 @@ sealed class ColorMode(
     )
 
     data object Breeze : ColorMode(
-        key = "breeze",
+        key = "Breeze",
         theme = object : appTheme {
             override val light: ColorScheme
                 @Composable
@@ -84,7 +84,7 @@ sealed class ColorMode(
     )
 
     data object Red : ColorMode(
-        key = "red",
+        key = "Red",
         theme = object : appTheme {
             override val light: ColorScheme
                 @Composable
