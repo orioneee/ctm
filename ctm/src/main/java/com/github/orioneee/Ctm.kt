@@ -22,6 +22,8 @@ import com.github.orioneee.internal.SharedPrefernnces
 object Ctm {
     val Colors = ColorModes
     val Themes = ThemeModes
+
+
     val AllColorModes = listOf(
         Colors.Dynamic,
         Colors.Blue,
@@ -52,16 +54,17 @@ object Ctm {
     val currentColorMode = _chousenColorMode
 
     fun setThemeMode(mode: ThemeMode) {
-        val selected = if(mode.isSupported) mode else ThemeMode.Light
+        val selected = if (mode.isSupported) mode else ThemeMode.Light
         _chousenThemeMode.value = selected
         SharedPrefernnces.saveThemeMode(selected)
     }
 
     fun setColorMode(mode: ColorMode) {
-        val selected = if(mode.isSupported) mode else ColorMode.Blue
+        val selected = if (mode.isSupported) mode else ColorMode.Blue
         _chousenColorMode.value = selected
         SharedPrefernnces.saveColorMode(selected)
     }
+
     val isAppDarkTheme: Boolean
         @Composable
         get() {
@@ -83,21 +86,40 @@ object Ctm {
         @Composable
         get() {
             val chooused = _chousenColorMode.observeAsState(ColorMode.Dynamic).value
-            return if(isAppDarkTheme) chooused.theme.dark else chooused.theme.light
+            return if (isAppDarkTheme) chooused.theme.dark else chooused.theme.light
+        }
+    val chousedColorScheme: ColorScheme
+        @Composable
+        get() {
+            val context = LocalContext.current
+            SharedPrefernnces.prefs = context.getSharedPreferences(
+                SharedPrefernnces.SharedPrefernncesName,
+                Context.MODE_PRIVATE
+            )
+            LaunchedEffect(Unit) {
+                _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
+                _chousenColorMode.value = SharedPrefernnces.loadColorMode()
+            }
+            val colorMode by _chousenColorMode.observeAsState(ColorMode.Dynamic)
+            val isDark = isAppDarkTheme
+            return if (isDark) colorMode.theme.dark else colorMode.theme.light
         }
 
     @Composable
     fun Theme(content: @Composable () -> Unit) {
         val context = LocalContext.current
-        SharedPrefernnces.prefs = context.getSharedPreferences(SharedPrefernnces.SharedPrefernncesName, Context.MODE_PRIVATE)
-        LaunchedEffect(Unit){
-                _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
-                _chousenColorMode.value = SharedPrefernnces.loadColorMode()
+        SharedPrefernnces.prefs = context.getSharedPreferences(
+            SharedPrefernnces.SharedPrefernncesName,
+            Context.MODE_PRIVATE
+        )
+        LaunchedEffect(Unit) {
+            _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
+            _chousenColorMode.value = SharedPrefernnces.loadColorMode()
         }
         val colorMode by _chousenColorMode.observeAsState(ColorMode.Dynamic)
         val colorScheme: ColorScheme
         val isDark = isAppDarkTheme
-        colorScheme = if(isDark)  colorMode.theme.dark else colorMode.theme.light
+        colorScheme = if (isDark) colorMode.theme.dark else colorMode.theme.light
         val view = LocalView.current
         if (!view.isInEditMode) {
             SideEffect {
@@ -105,7 +127,8 @@ object Ctm {
                 window.statusBarColor = Color.Transparent.toArgb()
                 window.navigationBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDark
-                WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !isDark
+                WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
+                    !isDark
             }
         }
 

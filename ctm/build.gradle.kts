@@ -66,7 +66,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.orioneee"
                 artifactId = "ctm"
-                version = "1.0.5"
+                version = "1.0.6"
                 from(components["release"])
             }
         }
