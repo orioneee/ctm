@@ -104,61 +104,10 @@ object Ctm {
             val isDark = isAppDarkTheme
             return if (isDark) _chousenColorMode.value.theme.dark else _chousenColorMode.value.theme.light
         }
-    private val animatedColorScheme: ColorScheme
-        @Composable
-        get() {
-            if (isAppDarkTheme) {
-                return darkColorScheme(
-                    primary = animateColorAsState(targetValue = ChousedColorScheme.primary).value,
-                    onPrimary = animateColorAsState(targetValue = ChousedColorScheme.onPrimary).value,
-                    primaryContainer = animateColorAsState(targetValue = ChousedColorScheme.primaryContainer).value,
-                    onPrimaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onPrimaryContainer).value,
-                    inversePrimary = animateColorAsState(targetValue = ChousedColorScheme.inversePrimary).value,
-                    secondary = animateColorAsState(targetValue = ChousedColorScheme.secondary).value,
-                    onSecondary = animateColorAsState(targetValue = ChousedColorScheme.onSecondary).value,
-                    secondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.secondaryContainer).value,
-                    onSecondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onSecondaryContainer).value,
-                    tertiary = animateColorAsState(targetValue = ChousedColorScheme.tertiary).value,
-                    onTertiary = animateColorAsState(targetValue = ChousedColorScheme.onTertiary).value,
-                    tertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.tertiaryContainer).value,
-                    onTertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onTertiaryContainer).value,
-                    background = animateColorAsState(targetValue = ChousedColorScheme.background).value,
-                    onBackground = animateColorAsState(targetValue = ChousedColorScheme.onBackground).value,
-                    surface = animateColorAsState(targetValue = ChousedColorScheme.surface).value,
-                    onSurface = animateColorAsState(targetValue = ChousedColorScheme.onSurface).value,
-                    surfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.surfaceVariant).value,
-                    onSurfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.onSurfaceVariant).value,
-                    inverseSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseSurface).value,
-                    inverseOnSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseOnSurface).value,
-                    outline = animateColorAsState(targetValue = ChousedColorScheme.outline).value,
-                )
-            }
-            return lightColorScheme(
-                primary = animateColorAsState(targetValue = ChousedColorScheme.primary).value,
-                onPrimary = animateColorAsState(targetValue = ChousedColorScheme.onPrimary).value,
-                primaryContainer = animateColorAsState(targetValue = ChousedColorScheme.primaryContainer).value,
-                onPrimaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onPrimaryContainer).value,
-                inversePrimary = animateColorAsState(targetValue = ChousedColorScheme.inversePrimary).value,
-                secondary = animateColorAsState(targetValue = ChousedColorScheme.secondary).value,
-                onSecondary = animateColorAsState(targetValue = ChousedColorScheme.onSecondary).value,
-                secondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.secondaryContainer).value,
-                onSecondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onSecondaryContainer).value,
-                tertiary = animateColorAsState(targetValue = ChousedColorScheme.tertiary).value,
-                onTertiary = animateColorAsState(targetValue = ChousedColorScheme.onTertiary).value,
-                tertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.tertiaryContainer).value,
-                onTertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onTertiaryContainer).value,
-                background = animateColorAsState(targetValue = ChousedColorScheme.background).value,
-                onBackground = animateColorAsState(targetValue = ChousedColorScheme.onBackground).value,
-                surface = animateColorAsState(targetValue = ChousedColorScheme.surface).value,
-                onSurface = animateColorAsState(targetValue = ChousedColorScheme.onSurface).value,
-                surfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.surfaceVariant).value,
-                onSurfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.onSurfaceVariant).value,
-                inverseSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseSurface).value,
-                inverseOnSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseOnSurface).value,
-                outline = animateColorAsState(targetValue = ChousedColorScheme.outline).value,
-            )
-        }
-    val colorScheme: ColorScheme @Composable get() = animatedColorScheme
+    val colorScheme: ColorScheme @Composable get() {
+        println("Recompose")
+        return ChousedColorScheme
+    }
 
     @Composable
     fun Theme(content: @Composable () -> Unit) {
