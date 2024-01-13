@@ -1,6 +1,7 @@
 package com.github.orioneee
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import com.github.orioneee.internal.AppThemes

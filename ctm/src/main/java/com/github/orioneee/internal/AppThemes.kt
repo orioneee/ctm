@@ -1,6 +1,7 @@
 package com.github.orioneee.internal
 
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme

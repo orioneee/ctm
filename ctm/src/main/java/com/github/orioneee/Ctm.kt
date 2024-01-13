@@ -2,14 +2,18 @@ package com.github.orioneee
 
 import android.app.Activity
 import android.content.Context
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.toArgb
@@ -24,15 +28,18 @@ object Ctm {
     val Themes = ThemeModes
 
 
-    val AllColorModes = listOf(
-        Colors.Dynamic,
-        Colors.Blue,
-        Colors.Green,
-        Colors.Indigo,
-        Colors.Orange,
-        Colors.Breeze,
-        Colors.Red
-    )
+    val AllColorModes: List<ColorMode>
+        get() {
+            return listOf(
+                Colors.Dynamic,
+                Colors.Blue,
+                Colors.Green,
+                Colors.Indigo,
+                Colors.Orange,
+                Colors.Breeze,
+                Colors.Red
+            ).filter { it.isSupported }
+        }
     val AllThemeModes = listOf(
         ThemeMode.System,
         ThemeMode.Light,
@@ -47,8 +54,10 @@ object Ctm {
                 lerp(Color.LightGray, this.primary, 0f)
             }
         }
-    private val _chousenColorMode = MutableLiveData<ColorMode>()
-    private val _chousenThemeMode = MutableLiveData<ThemeMode>()
+
+    private val _chousenColorMode = mutableStateOf<ColorMode>(ColorMode.Dynamic)
+    private val _chousenThemeMode = mutableStateOf<ThemeMode>(ThemeMode.System)
+
 
     val currentThemeMode = _chousenThemeMode
     val currentColorMode = _chousenColorMode
@@ -68,27 +77,19 @@ object Ctm {
     val isAppDarkTheme: Boolean
         @Composable
         get() {
-            return _chousenThemeMode.observeAsState(ThemeMode.System).value == ThemeMode.Dark || (_chousenThemeMode.observeAsState(
-                ThemeMode.System
-            ).value == ThemeMode.System && isSystemInDarkTheme())
+            return _chousenThemeMode.value == ThemeMode.Dark || (_chousenThemeMode.value == ThemeMode.System && isSystemInDarkTheme())
         }
-    val darkColorScheme: ColorScheme
+    val ChousedDarkColorScheme: ColorScheme
         @Composable
         get() {
-            return _chousenColorMode.observeAsState(ColorMode.Dynamic).value.theme.dark
+            return _chousenColorMode.value.theme.dark
         }
-    val lightColorScheme: ColorScheme
+    val ChousedLightColorScheme: ColorScheme
         @Composable
         get() {
-            return _chousenColorMode.observeAsState(ColorMode.Dynamic).value.theme.light
+            return _chousenColorMode.value.theme.light
         }
-    val dynamicColorScheme: ColorScheme
-        @Composable
-        get() {
-            val chooused = _chousenColorMode.observeAsState(ColorMode.Dynamic).value
-            return if (isAppDarkTheme) chooused.theme.dark else chooused.theme.light
-        }
-    val chousedColorScheme: ColorScheme
+    private val ChousedColorScheme: ColorScheme
         @Composable
         get() {
             val context = LocalContext.current
@@ -100,10 +101,64 @@ object Ctm {
                 _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
                 _chousenColorMode.value = SharedPrefernnces.loadColorMode()
             }
-            val colorMode by _chousenColorMode.observeAsState(ColorMode.Dynamic)
             val isDark = isAppDarkTheme
-            return if (isDark) colorMode.theme.dark else colorMode.theme.light
+            return if (isDark) _chousenColorMode.value.theme.dark else _chousenColorMode.value.theme.light
         }
+    private val animatedColorScheme: ColorScheme
+        @Composable
+        get() {
+            if (isAppDarkTheme) {
+                return darkColorScheme(
+                    primary = animateColorAsState(targetValue = ChousedColorScheme.primary).value,
+                    onPrimary = animateColorAsState(targetValue = ChousedColorScheme.onPrimary).value,
+                    primaryContainer = animateColorAsState(targetValue = ChousedColorScheme.primaryContainer).value,
+                    onPrimaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onPrimaryContainer).value,
+                    inversePrimary = animateColorAsState(targetValue = ChousedColorScheme.inversePrimary).value,
+                    secondary = animateColorAsState(targetValue = ChousedColorScheme.secondary).value,
+                    onSecondary = animateColorAsState(targetValue = ChousedColorScheme.onSecondary).value,
+                    secondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.secondaryContainer).value,
+                    onSecondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onSecondaryContainer).value,
+                    tertiary = animateColorAsState(targetValue = ChousedColorScheme.tertiary).value,
+                    onTertiary = animateColorAsState(targetValue = ChousedColorScheme.onTertiary).value,
+                    tertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.tertiaryContainer).value,
+                    onTertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onTertiaryContainer).value,
+                    background = animateColorAsState(targetValue = ChousedColorScheme.background).value,
+                    onBackground = animateColorAsState(targetValue = ChousedColorScheme.onBackground).value,
+                    surface = animateColorAsState(targetValue = ChousedColorScheme.surface).value,
+                    onSurface = animateColorAsState(targetValue = ChousedColorScheme.onSurface).value,
+                    surfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.surfaceVariant).value,
+                    onSurfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.onSurfaceVariant).value,
+                    inverseSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseSurface).value,
+                    inverseOnSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseOnSurface).value,
+                    outline = animateColorAsState(targetValue = ChousedColorScheme.outline).value,
+                )
+            }
+            return lightColorScheme(
+                primary = animateColorAsState(targetValue = ChousedColorScheme.primary).value,
+                onPrimary = animateColorAsState(targetValue = ChousedColorScheme.onPrimary).value,
+                primaryContainer = animateColorAsState(targetValue = ChousedColorScheme.primaryContainer).value,
+                onPrimaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onPrimaryContainer).value,
+                inversePrimary = animateColorAsState(targetValue = ChousedColorScheme.inversePrimary).value,
+                secondary = animateColorAsState(targetValue = ChousedColorScheme.secondary).value,
+                onSecondary = animateColorAsState(targetValue = ChousedColorScheme.onSecondary).value,
+                secondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.secondaryContainer).value,
+                onSecondaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onSecondaryContainer).value,
+                tertiary = animateColorAsState(targetValue = ChousedColorScheme.tertiary).value,
+                onTertiary = animateColorAsState(targetValue = ChousedColorScheme.onTertiary).value,
+                tertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.tertiaryContainer).value,
+                onTertiaryContainer = animateColorAsState(targetValue = ChousedColorScheme.onTertiaryContainer).value,
+                background = animateColorAsState(targetValue = ChousedColorScheme.background).value,
+                onBackground = animateColorAsState(targetValue = ChousedColorScheme.onBackground).value,
+                surface = animateColorAsState(targetValue = ChousedColorScheme.surface).value,
+                onSurface = animateColorAsState(targetValue = ChousedColorScheme.onSurface).value,
+                surfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.surfaceVariant).value,
+                onSurfaceVariant = animateColorAsState(targetValue = ChousedColorScheme.onSurfaceVariant).value,
+                inverseSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseSurface).value,
+                inverseOnSurface = animateColorAsState(targetValue = ChousedColorScheme.inverseOnSurface).value,
+                outline = animateColorAsState(targetValue = ChousedColorScheme.outline).value,
+            )
+        }
+    val colorScheme: ColorScheme @Composable get() = animatedColorScheme
 
     @Composable
     fun Theme(content: @Composable () -> Unit) {
@@ -116,10 +171,10 @@ object Ctm {
             _chousenThemeMode.value = SharedPrefernnces.loadThemeMode()
             _chousenColorMode.value = SharedPrefernnces.loadColorMode()
         }
-        val colorMode by _chousenColorMode.observeAsState(ColorMode.Dynamic)
         val colorScheme: ColorScheme
         val isDark = isAppDarkTheme
-        colorScheme = if (isDark) colorMode.theme.dark else colorMode.theme.light
+        colorScheme =
+            if (isDark) _chousenColorMode.value.theme.dark else _chousenColorMode.value.theme.light
         val view = LocalView.current
         if (!view.isInEditMode) {
             SideEffect {

@@ -2,6 +2,7 @@ package com.github.orioneee
 
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import com.github.orioneee.internal.AppThemes
@@ -19,13 +20,8 @@ sealed class ThemeMode(
             override val isSupportedDynamic = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             override val Dynamic: ColorScheme
                 @Composable
-                get() {
-                    return if(Ctm.isAppDarkTheme) {
-                        AppThemes.DynamicDarkColorScheme
-                    } else {
-                        AppThemes.DynamicLightColorScheme
-                    }
-                }
+                @RequiresApi(Build.VERSION_CODES.S)
+                get() = if(Ctm.isAppDarkTheme) AppThemes.DynamicDarkColorScheme else AppThemes.DynamicLightColorScheme
             override val Blue: ColorScheme
                 @Composable
                 get() = if(Ctm.isAppDarkTheme) AppThemes.BlueTheme.dark else AppThemes.BlueTheme.light
